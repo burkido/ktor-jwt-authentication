@@ -1,6 +1,6 @@
 package com.example.database
 
-import com.example.database.tables.User
+import com.example.database.tables.UserTable
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.jetbrains.exposed.sql.Database
@@ -13,7 +13,7 @@ object DatabaseFactory {
         Database.connect(hikari())
         transaction {
             // Add your database initialization code here
-            SchemaUtils.create(User)
+            SchemaUtils.create(UserTable)
         }
     }
 
