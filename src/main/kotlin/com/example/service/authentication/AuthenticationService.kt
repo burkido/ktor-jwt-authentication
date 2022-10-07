@@ -5,5 +5,12 @@ import com.example.routes.authentication.UserParams
 
 interface AuthenticationService {
 
-    suspend fun registerUser(userParams: UserParams): User
+    /**
+     * @param userParams takes user based information. Not like created date, id and token.
+     * @return User if exists, null otherwise
+     * */
+    suspend fun registerUser(userParams: UserParams): User?
+
+    suspend fun checkUserIfExistsByEmail(email: String): User?
+
 }
