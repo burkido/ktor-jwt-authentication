@@ -2,6 +2,7 @@ package com.example.repository
 
 import com.example.model.ApiResponse
 import com.example.routes.authentication.UserParams
+import com.example.security.JwtConfig
 import com.example.service.authentication.AuthenticationService
 
 class AuthenticationRepositoryImpl(
@@ -14,6 +15,8 @@ class AuthenticationRepositoryImpl(
         } else {
             val user = authenticationService.registerUser(userParams)
             if (user != null) {
+                val token = JwtConfig.instance.createAccessToken(user.id)
+                user.authenticationToken = token
                 ApiResponse.SuccessResponse(
                     data = user,
                     message = "User registered successfully"
