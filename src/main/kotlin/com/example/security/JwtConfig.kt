@@ -8,12 +8,6 @@ class JwtConfig private constructor(secret: String){
 
     private val algorithm = Algorithm.HMAC256(secret)
 
-    val verifier: JWTVerifier = JWT
-        .require(algorithm)
-        .withIssuer(ISSUER)
-        .withAudience(AUDIENCE)
-        .build()
-
     fun createAccessToken(id: Int): String = JWT
         .create()
         .withIssuer(ISSUER)
@@ -22,8 +16,8 @@ class JwtConfig private constructor(secret: String){
         .sign(algorithm)
 
     companion object{
-        private const val ISSUER = "my-story-app"
-        private const val AUDIENCE = "my-story-app"
+        private const val ISSUER = "https://jwt-provider-domain/"
+        private const val AUDIENCE = "jwt-audience"
         const val CLAIM = "id"
 
         lateinit var instance: JwtConfig
