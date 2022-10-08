@@ -5,6 +5,7 @@ import com.example.database.tables.UserTable
 import com.example.database.tables.UserTable.password
 import com.example.model.User
 import com.example.routes.authentication.UserParams
+import com.example.security.hashPassword
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
@@ -18,7 +19,7 @@ class AuthenticationServiceImpl : AuthenticationService {
             statement = UserTable.insert {
                 it[name] = userParams.name
                 it[email] = userParams.email
-                it[password] = userParams.password
+                it[password] = hashPassword(userParams.password)
             }
         }
         return rowToUser(statement?.resultedValues?.get(0))

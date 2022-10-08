@@ -11,6 +11,8 @@ import io.ktor.response.*
 import io.ktor.request.*
 
 fun Application.configureSecurity() {
+
+
     
     authentication {
             jwt {
