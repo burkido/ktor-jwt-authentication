@@ -1,15 +1,18 @@
 package com.example.repository
 
 import com.example.model.ApiResponse
-import com.example.routes.authentication.UserParams
+import com.example.routes.authentication.LoginUserParams
+import com.example.routes.authentication.RegisterUserParams
 import com.example.security.JwtConfig
 import com.example.service.authentication.AuthenticationService
+import org.koin.java.KoinJavaComponent.inject
 
-class AuthenticationRepositoryImpl(
-    private val authenticationService: AuthenticationService
-) : AuthenticationRepository {
+class AuthenticationRepositoryImpl: AuthenticationRepository {
 
-    override suspend fun registerUser(userParams: UserParams): ApiResponse<Any> {
+    //inject authentication service
+    private val authenticationService: AuthenticationService by inject(AuthenticationService::class.java)
+
+    override suspend fun registerUser(userParams: RegisterUserParams): ApiResponse<Any> {
        return if (isEmailExist(userParams.email)) {
             ApiResponse.ErrorResponse(message = "Email already exists")
         } else {
@@ -27,23 +30,17 @@ class AuthenticationRepositoryImpl(
         }
     }
 
-    override suspend fun loginUser(email: String, password: String): ApiResponse<Any> {
-        val user = authenticationService.checkUserIfExistsByEmail(email)
+    override suspend fun loginUser(loginUserParams: LoginUserParams): ApiResponse<Any> {
+        val user = authenticationService.loginUser(loginUserParams)
         return if (user != null) {
-            if (user.password == password) {
-                ApiResponse.SuccessResponse(
-                    data = user,
-                    message = "User logged in successfully"
-                )
-            } else {
-                ApiResponse.ErrorResponse(
-                    message = "Incorrect password"
-                )
-            }
-        } else {
-            ApiResponse.ErrorResponse(
-                message = "User does not exist"
+            val token = JwtConfig.instance.createAccessToken(user.id)
+            user.authenticationToken = token
+            ApiResponse.SuccessResponse(
+                data = user,
+                message = "User logged in successfully"
             )
+        } else {
+            ApiResponse.ErrorResponse(message = "Something went wrong")
         }
     }
 

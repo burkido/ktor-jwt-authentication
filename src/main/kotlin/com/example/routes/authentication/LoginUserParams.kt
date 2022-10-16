@@ -1,7 +1,6 @@
 package com.example.routes.authentication
 
-data class UserParams(
-    val name: String,
+data class LoginUserParams(
     val email: String,
     val password: String
 )

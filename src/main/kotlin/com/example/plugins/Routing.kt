@@ -9,10 +9,10 @@ import io.ktor.application.*
 
 fun Application.configureRouting() {
 
-    val authenticationRepository = AuthenticationRepositoryImpl(AuthenticationServiceImpl())
+    //val authenticationRepository = AuthenticationRepositoryImpl(AuthenticationServiceImpl())
 
     routing {
 
-        authenticationRoutes(authenticationRepository)
+        authenticationRoutes()
     }
 }
