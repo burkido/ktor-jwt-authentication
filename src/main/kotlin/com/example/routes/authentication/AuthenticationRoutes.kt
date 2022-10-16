@@ -1,4 +1,4 @@
-package com.example.routes
+package com.example.routes.authentication
 
 import com.example.repository.AuthenticationRepository
 import com.example.routes.authentication.UserParams
@@ -14,9 +14,7 @@ fun Route.authenticationRoutes(
     authenticationRepository: AuthenticationRepository
 ) {
 
-
     route("/auth") {
-
         authenticate {
             get("/secret") {
                 val principal = call.principal<JWTPrincipal>()
