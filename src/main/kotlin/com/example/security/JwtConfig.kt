@@ -1,10 +1,9 @@
 package com.example.security
 
 import com.auth0.jwt.JWT
-import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 
-class JwtConfig private constructor(secret: String){
+class JwtConfig private constructor(secret: String) {
 
     private val algorithm = Algorithm.HMAC256(secret)
 
@@ -15,7 +14,7 @@ class JwtConfig private constructor(secret: String){
         .withClaim(CLAIM, id)
         .sign(algorithm)
 
-    companion object{
+    companion object {
         private const val ISSUER = "https://jwt-provider-domain/"
         private const val AUDIENCE = "jwt-audience"
         const val CLAIM = "id"
@@ -23,9 +22,9 @@ class JwtConfig private constructor(secret: String){
         lateinit var instance: JwtConfig
             private set
 
-        fun initialize(secret: String){
-            synchronized(this){
-                if(!this::instance.isInitialized){
+        fun initialize(secret: String) {
+            synchronized(this) {
+                if (!this::instance.isInitialized) {
                     instance = JwtConfig(secret)
                 }
             }

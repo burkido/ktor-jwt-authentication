@@ -16,11 +16,3 @@ sealed class ApiResponse<T>(
     ) : ApiResponse<T>()
 
 }
-
-
-data class Responske(
-    val success: Boolean,
-    val message: String? = null,
-    val prevPage: Int? = null,
-    val nextPage: Int? = null
-)

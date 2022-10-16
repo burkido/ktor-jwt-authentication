@@ -7,7 +7,6 @@ import com.auth0.jwt.algorithms.Algorithm
 import com.example.security.JwtConfig
 import io.ktor.application.*
 
-
 fun Application.configureSecurity() {
 
     JwtConfig.initialize("jwt-auth")

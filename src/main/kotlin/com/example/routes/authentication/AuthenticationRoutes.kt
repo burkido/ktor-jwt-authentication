@@ -8,11 +8,10 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import org.koin.ktor.ext.inject
 
-fun Route.authenticationRoutes() {
-
-    val authenticationRepository: AuthenticationRepository by inject()
+fun Route.authenticationRoutes(
+    authenticationRepository: AuthenticationRepository
+) {
 
     route("/auth") {
 
